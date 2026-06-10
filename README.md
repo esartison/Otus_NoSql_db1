@@ -3,28 +3,23 @@
 ДЗ: Необходимо написать к каким системам по CAP теореме относятся перечисленные БД и почему: MongoDB, MSSQL, Cassandra.
 
 
-***Как настроить бэкапы так, чтобы они не влияли на производительность системы?***
+<img width="1048" height="1044" alt="image" src="https://github.com/user-attachments/assets/341ffb17-6646-478e-820f-815694959b09" />
 
-Задание:
 
 ## MongoDB ##
 
-создал 2 виртуальные машины в YC 
-![image](https://github.com/user-attachments/assets/26e5d891-af2e-48ac-8084-7692d460eed1)
-
-
-pgtest01: установка Postgres
-```
-sudo apt install curl ca-certificates
-sudo install -d /usr/share/postgresql-common/pgdg
-sudo curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc
-sudo sh -c 'echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt noble-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-sudo apt update
-sudo apt install postgresql-17 postgresql-client-17
-```
 
 ## MSSQL ##
+MSSQL- это классическая реляционная база данных. Также строго следует принципу ACID.
 
+При самой обычной конфигурации, MSSQL по CAP относится к типу CA.
+
+Можно настроить read-only реплики и в случае недоступности мастер экземпляра, данные могут быть получены с реплики. Тоесть AP тоже может подходить.
 
 ## Cassandra ##
+
+Cassandra - это NoSql база, которая относится к типу AP. Доступность сервиса ставится выше согласованности данных.
+
+Каждый узел принимает и чтение и запись, поэтому при выходе из строя одной ноды - остальные продолжают работу.
+
+В конечном счете, данные между участиниками распределенной системы будут синнхранизованы. 
